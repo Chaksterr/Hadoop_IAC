@@ -138,28 +138,6 @@ hdfs dfsadmin -report
 - **vagrant** - Auto-switches to hadoop on SSH
 - **hadoop** - Main service user with sudo
 
-### Add Users
-
-Edit `ansible/group_vars/all.yml`:
-```yaml
-additional_users:
-  - user1
-  - analyst
-```
-
-Apply changes:
-```bash
-cd ansible
-ansible-playbook -i inventory.ini site.yml
-```
-
-Test:
-```bash
-vagrant ssh master
-sudo su - user1
-hadoop version
-```
-
 ---
 
 ## Configuration
