@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+    <property>
+        <name>mapreduce.application.classpath</name>
+        <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+    </property>
+    
+    <!-- JobHistory Server Configuration -->
+    <property>
+        <name>mapreduce.jobhistory.address</name>
+        <value>master:10020</value>
+        <description>MapReduce JobHistory Server IPC host:port</description>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.address</name>
+        <value>master:19888</value>
+        <description>MapReduce JobHistory Server Web UI host:port</description>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.intermediate-done-dir</name>
+        <value>/tmp/hadoop-yarn/staging/history/done_intermediate</value>
+        <description>Directory where history files are written by MapReduce jobs.</description>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.done-dir</name>
+        <value>/tmp/hadoop-yarn/staging/history/done</value>
+        <description>Directory where history files are managed by the MR JobHistory Server.</description>
+    </property>
+    
+    <!-- JobHistory Server bind to all interfaces -->
+    <property>
+        <name>mapreduce.jobhistory.bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+</configuration>

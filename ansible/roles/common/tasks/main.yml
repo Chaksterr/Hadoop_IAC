@@ -1,0 +1,192 @@
+---
+
+# Update system
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+  tags: common
+
+# Install Java
+- name: Install OpenJDK
+  apt:
+    name: "openjdk-{{ java_version }}-jdk"
+    state: present
+  tags: common
+
+# Create hadoop group
+- name: Create hadoop group
+  group:
+    name: "{{ hadoop_group }}"
+    state: present
+  tags: common
+
+# Create hadoop user
+- name: Create hadoop user
+  user:
+    name: "{{ hadoop_user }}"
+    group: "{{ hadoop_group }}"
+    home: "/home/{{ hadoop_user }}"
+    shell: /bin/bash
+    state: present
+  tags: common
+
+# Create additional users if defined
+- name: Create additional users for Hadoop access
+  user:
+    name: "{{ item }}"
+    groups: "{{ hadoop_group }}"
+    append: yes
+    shell: /bin/bash
+    state: present
+  loop: "{{ additional_users }}"
+  when: additional_users is defined and additional_users | length > 0
+  tags: common
+
+- name: Give hadoop user sudo privileges
+  lineinfile:
+    path: /etc/sudoers.d/hadoop
+    line: "{{ hadoop_user }} ALL=(ALL) NOPASSWD:ALL"
+    create: yes
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: common
+
+- name: Ensure vagrant user has passwordless sudo
+  lineinfile:
+    path: /etc/sudoers.d/vagrant
+    line: "vagrant ALL=(ALL) NOPASSWD:ALL"
+    create: yes
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: common
+
+- name: Auto switch to hadoop user for vagrant
+  lineinfile:
+    path: /home/vagrant/.bashrc
+    line: |
+      if [[ $USER == "vagrant" ]] && [[ $(tty) =~ /dev/pts ]]; then
+        exec sudo -i -u hadoop
+      fi
+    state: present
+  tags: common
+
+# Set JAVA_HOME environment
+
+- name: Set JAVA_HOME in .bashrc
+  lineinfile:
+    path: "/home/{{ hadoop_user }}/.bashrc"
+    line: "export JAVA_HOME=/usr/lib/jvm/java-{{ java_version }}-openjdk-amd64"
+    state: present
+  tags: common
+
+- name: Set HADOOP_HOME in .bashrc
+  lineinfile:
+    path: "/home/{{ hadoop_user }}/.bashrc"
+    line: "export HADOOP_HOME={{ hadoop_home }}"
+    state: present
+  tags: common
+
+- name: Set PATH in .bashrc
+  lineinfile:
+    path: "/home/{{ hadoop_user }}/.bashrc"
+    line: "export PATH=$PATH:{{ hadoop_home }}/bin:{{ hadoop_home }}/sbin"
+    state: present
+  tags: common
+
+# Create global environment for all users
+- name: Create global Hadoop environment file
+  copy:
+    dest: /etc/profile.d/hadoop.sh
+    mode: '0644'
+    content: |
+      # Hadoop Environment Variables
+      export JAVA_HOME=/usr/lib/jvm/java-{{ java_version }}-openjdk-amd64
+      export HADOOP_HOME={{ hadoop_home }}
+      export HADOOP_CONF_DIR={{ hadoop_home }}/etc/hadoop
+      export HADOOP_MAPRED_HOME={{ hadoop_home }}
+      export HADOOP_COMMON_HOME={{ hadoop_home }}
+      export HADOOP_HDFS_HOME={{ hadoop_home }}
+      export YARN_HOME={{ hadoop_home }}
+      export PATH=$PATH:{{ hadoop_home }}/bin:{{ hadoop_home }}/sbin
+  tags: common
+
+# SSH passwordless setup
+- name: Create .ssh directory for hadoop user
+  file:
+    path: "/home/{{ hadoop_user }}/.ssh"
+    state: directory
+    owner: "{{ hadoop_user }}"
+    group: "{{ hadoop_group }}"
+    mode: '0700'
+  tags: ssh
+
+- name: Generate SSH key pair for hadoop user on master
+  command: ssh-keygen -t rsa -b 2048 -m PEM -f /home/{{ hadoop_user }}/.ssh/id_rsa -N ''
+  args:
+    creates: /home/{{ hadoop_user }}/.ssh/id_rsa
+  when: inventory_hostname == 'master'
+  tags: ssh
+
+  
+- name: Set ownership of SSH public key on master
+  file:
+    path: "/home/{{ hadoop_user }}/.ssh/id_rsa.pub"
+    owner: "{{ hadoop_user }}"
+    group: "{{ hadoop_group }}"
+    mode: '0644'
+  when: inventory_hostname == 'master'
+  tags: ssh
+
+- name: Fetch public key from master
+  fetch:
+    src: "/home/{{ hadoop_user }}/.ssh/id_rsa.pub"
+    dest: "/tmp/hadoop_id_rsa_master.pub"
+    flat: yes
+  when: inventory_hostname == 'master'
+  tags: ssh
+
+- name: Wait for master key to be fetched
+  wait_for:
+    path: "/tmp/hadoop_id_rsa_master.pub"
+    state: present
+  delegate_to: localhost
+  become: no
+  run_once: true
+  tags: ssh
+
+- name: Distribute master public key to all nodes
+  authorized_key:
+    user: "{{ hadoop_user }}"
+    state: present
+    key: "{{ lookup('file', '/tmp/hadoop_id_rsa_master.pub') }}"
+  tags: ssh
+
+- name: Configure SSH to disable host key checking
+  blockinfile:
+    path: "/home/{{ hadoop_user }}/.ssh/config"
+    create: yes
+    owner: "{{ hadoop_user }}"
+    group: "{{ hadoop_group }}"
+    mode: '0600'
+    block: |
+      Host *
+        StrictHostKeyChecking no
+        UserKnownHostsFile=/dev/null
+  tags: ssh
+
+- name: Remove cloud-init generated 127.0.2.1 entries from /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.2\.1\s+{{ item }}.*'
+    state: absent
+  loop: "{{ groups['all'] }}"
+  tags: ssh
+
+- name: Add all cluster nodes to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+    state: present
+  loop: "{{ groups['all'] }}"
+  tags: ssh

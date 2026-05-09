@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!-- Default FileSystem -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://{{ namenode_host }}:{{ namenode_port }}</value>
+    </property>
+    
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hadoop-${user.name}</value>
+    </property>
+</configuration>

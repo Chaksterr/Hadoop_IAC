@@ -1,0 +1,33 @@
+---
+# Stop HDFS services
+
+- name: Check if DataNode is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q DataNode"
+  register: dn_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname in groups['datanodes']
+
+- name: Stop DataNode service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon stop datanode"
+  when:
+    - inventory_hostname in groups['datanodes']
+    - dn_running.rc == 0
+
+- name: Wait for DataNodes to stop
+  pause:
+    seconds: 5
+  when: inventory_hostname in groups['datanodes']
+
+- name: Check if NameNode is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q NameNode"
+  register: nn_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop NameNode service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon stop namenode"
+  when:
+    - inventory_hostname == 'master'
+    - nn_running.rc == 0

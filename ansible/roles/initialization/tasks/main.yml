@@ -1,0 +1,9 @@
+---
+
+- name: Start HDFS services
+  import_tasks: start_hdfs.yml
+  tags: [init, hdfs]
+
+- name: Start YARN services
+  import_tasks: start_yarn.yml
+  tags: [init, yarn]

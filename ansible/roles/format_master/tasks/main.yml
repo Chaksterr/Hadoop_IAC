@@ -1,0 +1,25 @@
+---
+# Format Master NameNode (run only once)
+
+- name: Check if master NameNode already formatted
+  stat:
+    path: "{{ hadoop_data_dir }}/namenode/current/VERSION"
+  register: namenode_formatted
+  tags: format
+
+- name: Format master NameNode
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs namenode -format -force -nonInteractive"
+  when: not namenode_formatted.stat.exists
+  tags: format
+
+- name: Display formatting result
+  debug:
+    msg: "Master NameNode formatted successfully"
+  when: not namenode_formatted.stat.exists
+  tags: format
+
+- name: Skip formatting if already done
+  debug:
+    msg: "Master NameNode already formatted, skipping..."
+  when: namenode_formatted.stat.exists
+  tags: format

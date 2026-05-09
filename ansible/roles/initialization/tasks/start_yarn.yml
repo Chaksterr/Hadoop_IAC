@@ -1,0 +1,88 @@
+---
+# Start YARN services
+
+- name: Check if ResourceManager is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q ResourceManager"
+  register: rm_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop ResourceManager if already running
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon stop resourcemanager"
+  when:
+    - inventory_hostname == 'master'
+    - rm_running.rc == 0
+
+- name: Start ResourceManager service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon start resourcemanager"
+  when: inventory_hostname == 'master'
+
+- name: Wait for ResourceManager to be ready
+  wait_for:
+    port: 8088
+    host: "{{ namenode_host }}"
+    delay: 5
+    timeout: 60
+  when: inventory_hostname == 'master'
+
+# Create JobHistory directories in HDFS
+- name: Create JobHistory intermediate directory in HDFS
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs dfs -mkdir -p /tmp/hadoop-yarn/staging/history/done_intermediate"
+  when: inventory_hostname == 'master'
+  failed_when: false
+  changed_when: false
+
+- name: Create JobHistory done directory in HDFS
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs dfs -mkdir -p /tmp/hadoop-yarn/staging/history/done"
+  when: inventory_hostname == 'master'
+  failed_when: false
+  changed_when: false
+
+- name: Set permissions on JobHistory directories
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs dfs -chmod -R 1777 /tmp"
+  when: inventory_hostname == 'master'
+  failed_when: false
+  changed_when: false
+
+- name: Check if JobHistory Server is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q JobHistoryServer"
+  register: jhs_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop JobHistory Server if already running
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/mapred --daemon stop historyserver"
+  when:
+    - inventory_hostname == 'master'
+    - jhs_running.rc == 0
+
+- name: Start JobHistory Server
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/mapred --daemon start historyserver"
+  when: inventory_hostname == 'master'
+
+- name: Wait for JobHistory Server to be ready
+  wait_for:
+    port: 19888
+    host: "{{ namenode_host }}"
+    delay: 5
+    timeout: 60
+  when: inventory_hostname == 'master'
+
+- name: Check if NodeManager is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q NodeManager"
+  register: nm_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname in groups['datanodes']
+
+- name: Stop NodeManager if already running
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon stop nodemanager"
+  when:
+    - inventory_hostname in groups['datanodes']
+    - nm_running.rc == 0
+
+- name: Start NodeManager service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon start nodemanager"
+  when: inventory_hostname in groups['datanodes']

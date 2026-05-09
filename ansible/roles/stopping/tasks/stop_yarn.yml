@@ -1,0 +1,46 @@
+---
+# Stop YARN services
+
+- name: Check if NodeManager is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q NodeManager"
+  register: nm_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname in groups['datanodes']
+
+- name: Stop NodeManager service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon stop nodemanager"
+  when:
+    - inventory_hostname in groups['datanodes']
+    - nm_running.rc == 0
+
+- name: Check if JobHistory Server is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q JobHistoryServer"
+  register: jhs_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop JobHistory Server
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/mapred --daemon stop historyserver"
+  when:
+    - inventory_hostname == 'master'
+    - jhs_running.rc == 0
+
+- name: Wait for services to stop
+  pause:
+    seconds: 5
+  when: inventory_hostname == 'master'
+
+- name: Check if ResourceManager is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q ResourceManager"
+  register: rm_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop ResourceManager service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/yarn --daemon stop resourcemanager"
+  when:
+    - inventory_hostname == 'master'
+    - rm_running.rc == 0

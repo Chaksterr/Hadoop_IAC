@@ -1,0 +1,8 @@
+---
+# Start Hadoop cluster services
+
+- name: Start all Hadoop services
+  hosts: all
+  become: yes
+  roles:
+    - initialization

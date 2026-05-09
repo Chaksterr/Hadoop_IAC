@@ -1,0 +1,25 @@
+---
+
+- name: Setup common components on all nodes
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- name: Setup Hadoop cluster
+  hosts: all
+  become: yes
+  roles:
+    - hadoop
+
+- name: Format master NameNode
+  hosts: master
+  become: yes
+  roles:
+    - format_master
+
+- name: Initialize and start all services
+  hosts: all
+  become: yes
+  roles:
+    - initialization

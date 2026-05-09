@@ -1,0 +1,8 @@
+---
+# Stop Hadoop cluster services
+
+- name: Stop all Hadoop services
+  hosts: all
+  become: yes
+  roles:
+    - stopping

@@ -1,0 +1,16 @@
+---
+# Versions
+hadoop_version: "3.3.6"
+java_version: "11"
+
+# Paths
+hadoop_home: "/home/hadoop/hadoop"
+hadoop_data_dir: "/home/hadoop/hadoop_data"
+
+# User
+hadoop_user: "hadoop"
+hadoop_group: "hadoop"
+
+# Network
+namenode_host: "master"
+namenode_port: "9000"

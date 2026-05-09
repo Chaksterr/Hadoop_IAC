@@ -1,0 +1,43 @@
+# Vagrant
+.vagrant/
+*.box
+
+# Ansible
+*.retry
+ansible/*.retry
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Hadoop data
+hadoop_data/
+
+# Shared folder (contains large binaries)
+shared/*.tar.gz
+shared/*.tgz
+shared/*.deb
+shared/*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Temporary files
+*.tmp
+*.bak
+*.backup

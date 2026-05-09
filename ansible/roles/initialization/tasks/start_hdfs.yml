@@ -1,0 +1,44 @@
+---
+# Start HDFS services
+
+- name: Check if NameNode is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q NameNode"
+  register: nn_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname == 'master'
+
+- name: Stop NameNode if already running
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon stop namenode"
+  when:
+    - inventory_hostname == 'master'
+    - nn_running.rc == 0
+
+- name: Start NameNode service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon start namenode"
+  when: inventory_hostname == 'master'
+
+- name: Wait for NameNode to be ready
+  wait_for:
+    port: 9000
+    host: "{{ namenode_host }}"
+    delay: 10
+    timeout: 60
+  when: inventory_hostname == 'master'
+
+- name: Check if DataNode is running
+  shell: "sudo -u {{ hadoop_user }} jps | grep -q DataNode"
+  register: dn_running
+  failed_when: false
+  changed_when: false
+  when: inventory_hostname in groups['datanodes']
+
+- name: Stop DataNode if already running
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon stop datanode"
+  when:
+    - inventory_hostname in groups['datanodes']
+    - dn_running.rc == 0
+
+- name: Start DataNode service
+  shell: "sudo -u {{ hadoop_user }} {{ hadoop_home }}/bin/hdfs --daemon start datanode"
+  when: inventory_hostname in groups['datanodes']

@@ -1,0 +1,109 @@
+section,class,time,teacher,university,year
+Computer Science,Introduction to Programming,45,M. BENAMOR,FSEGS,2022
+Mathematics,Calculus I,60,A. TLILI,FSEGS,2025
+Economics,Microeconomics,50,K. HAMROUNI,FSS,2022
+Engineering,Circuit Theory,50,R. MASMOUDI,ENIS,2025
+Computer Science,Database Systems,55,S. GHOZLANE,ISIMS,2022
+Business,Marketing Principles,40,N. CHAABANE,FSEGS,2025
+Mathematics,Linear Algebra,55,F. JEBALI,FSS,2022
+Engineering,Thermodynamics,60,M. SAHLI,ENIS,2025
+Computer Science,Web Development,50,H. TOUMI,ENET'Com,2022
+Economics,Macroeconomics,50,L. ABID,FSS,2025
+Computer Science,Data Structures,60,Z. FERCHICHI,FSEGS,2022
+Engineering,Mechanics,55,W. BOUKTHIR,ENIS,2025
+Business,Financial Accounting,45,B. MABROUK,FSEGS,2022
+Mathematics,Probability,50,Y. CHAARI,FSS,2025
+Computer Science,Operating Systems,60,O. MASSOUDI,ISIMS,2022
+Engineering,Electronics,55,T. HADDAD,ENIS,2025
+Economics,Econometrics,50,I. MARZOUK,FSS,2022
+Computer Science,Computer Networks,50,P. AYARI,ENET'Com,2025
+Business,Management,40,J. KALLEL,FSEGS,2022
+Mathematics,Discrete Math,55,V. RIAHI,FSS,2025
+Computer Science,Algorithms,66,G. NASRI,FSEGS,2022
+Engineering,Materials Science,45,E. BOUHLEL,ENIS,2023
+Economics,Development Economics,50,D. JEMLI,FSS,2022
+Computer Science,Software Engineering,55,U. BENFRIHA,ISIMS,2023
+Business,Business Law,40,Q. MASSOUDI,FSEGS,2022
+Mathematics,Statistics,60,X. HAMZA,FSS,2023
+Computer Science,Artificial Intelligence,45,C. BOUKARI,ENET'Com,2022
+Engineering,Fluid Mechanics,50,B. GHORBEL,ENIS,2023
+Economics,International Trade,55,M. JAZIRI,FSS,2022
+Computer Science,Mobile Development,40,N. BACCARI,FSEGS,2024
+Business,Entrepreneurship,50,S. MAAOUIA,FSEGS,2022
+Mathematics,Number Theory,50,M. ZAIDI,FSS,2024
+Computer Science,Cloud Computing,55,K. BOUAOUN,ISIMS,2022
+Engineering,Control Systems,60,J. FERJANI,ENIS,2024
+Economics,Labor Economics,50,H. CHAABENI,FSS,2022
+Computer Science,Cyber Security,50,R. BENYOUSSEF,ENET'Com,2024
+Business,Supply Chain,40,F. MESTIRI,FSEGS,2022
+Mathematics,Differential Equations,55,M. ZAIDI,FSS,2024
+Computer Science,Game Development,45,A. BOUKADIDA,FSEGS,2022
+Engineering,Robotics,60,M. CHAARI,ENIS,2024
+Economics,Public Finance,50,S. JEMAA,FSS,2022
+Computer Science,Machine Learning,55,Y. HAMDI,ISIMS,2024
+Business,Human Resources,40,T. BOUGHZALA,FSEGS,2022
+Mathematics,Numerical Analysis,60,M. ZAIDI,FSS,2024
+Computer Science,Compiler Design,45,O. TOUNSI,ENET'Com,2022
+Engineering,Signal Processing,50,I. BENSLIMANE,ENIS,2024
+Economics,Behavioral Economics,55,N. MEJRI,FSS,2022
+Computer Science,Computer Graphics,40,R. HADDAD,FSEGS,2024
+Business,International Business,45,M. KHELIFI,FSEGS,2022
+Mathematics,Topology,50,M. ZAIDI,FSS,2024
+Computer Science,Natural Language Processing,55,A. SAIDI,ISIMS,2022
+Engineering,Biomedical Engineering,60,L. BOUAFIF,ENIS,2024
+Economics,Health Economics,50,S. BOUGHANMI,FSS,2022
+Computer Science,Blockchain,50,H. CHAIBI,ENET'Com,2024
+Business,Corporate Finance,55,F. BENOTHMAN,FSEGS,2022
+Mathematics,Complex Analysis,60,M. ZAIDI,FSS,2024
+Computer Science,Parallel Computing,45,F. BOUKHRIS,FSEGS,2022
+Engineering,Renewable Energy,50,Y. JERBI,ENIS,2023
+Economics,Environmental Economics,55,K. BOUJELBENE,FSS,2024
+Computer Science,Embedded Systems,40,N. HAMMAMI,ISIMS,2023
+Business,Digital Marketing,50,K. BOUGHLA,FSEGS,2024
+Mathematics,Mathematical Modeling,50,M. BOUAZIZ,FSS,2023
+Computer Science,Quantum Computing,60,A. GHARBI,ENET'Com,2024
+Engineering,Nanotechnology,55,M. BOUCHOUCHA,ENIS,2023
+Economics,Agricultural Economics,45,T. MAHJOUB,FSS,2024
+Computer Science,Big Data Analytics,50,B. BENHASSEN,FSEGS,2023
+Business,Project Management,55,K. BOUAOUN,FSEGS,2024
+Mathematics,Geometry,60,L. BENSLIMANE,FSS,2023
+Computer Science,Computer Vision,45,M. CHAOUCH,ISIMS,2024
+Engineering,Aerospace,50,S. BENYAHIA,ENIS,2023
+Economics,Urban Economics,55,N. BOUKTHIR,FSS,2024
+Computer Science,Information Retrieval,40,H. BOUGHANMI,ENET'Com,2023
+Business,Business Analytics,65,W. JEMAA,FSEGS,2024
+Mathematics,Optimization,50,F. BOUKHRIS,FSS,2023
+Computer Science,Distributed Systems,55,Y. BENOTHMAN,FSEGS,2024
+Engineering,Structural Analysis,62,M. BOUAZIZ,ENIS,2023
+Economics,Industrial Organization,45,S. TLILI,FSS,2024
+Computer Science,Human-Computer Interaction,50,K. BOUGHZALA,ISIMS,2023
+Business,Organizational Behavior,55,A. BENHASSINE,FSEGS,2024
+Mathematics,Algebra,61,R. BOUGHNIM,FSS,2023
+Computer Science,Software Testing,45,F. BOUKHRIS,ENET'Com,2024
+Engineering,Geotechnical,50,T. BENSLIMANE,ENIS,2023
+Economics,Financial Economics,55,N. BOUAOUN,FSS,2024
+Computer Science,Systems Programming,40,H. BENOTHMAN,FSEGS,2023
+Business,E-Commerce,45,W. BOUGHANMI,FSEGS,2024
+Mathematics,Real Analysis,50,F. BOUKHRIS,FSS,2023
+Computer Science,Computational Theory,60,K. BENAMOR,ISIMS,2024
+Engineering,Transportation,55,M. BOUAZIZ,ENIS,2023
+Economics,Monetary Economics,45,T. TLILI,FSS,2024
+Computer Science,Ethical Hacking,50,Y. BOUGHANMI,ENET'Com,2023
+Business,Consumer Behavior,55,N. BENHASSINE,FSEGS,2024
+Mathematics,Set Theory,60,F. BOUKHRIS,FSS,2023
+Computer Science,Augmented Reality,45,M. BOUAOUN,FSEGS,2022
+Engineering,Marine,50,S. BENOTHMAN,ENIS,2025
+Economics,Experimental Economics,55,K. BOUGHLA,FSS,2022
+Computer Science,Internet of Things,40,M. BOUAZIZ,ISIMS,2025
+Business,Brand Management,45,W. BENHASSINE,FSEGS,2022
+Mathematics,Graph Theory,60,F. BOUKHRIS,FSS,2025
+Computer Science,Functional Programming,60,M. BOUGHANMI,FSEGS,2022
+Engineering,Petroleum,55,N. BENOTHMAN,ENIS,2025
+Economics,History of Economic Thought,45,M. BOUAZIZ,FSS,2022
+Computer Science,Systems Analysis,50,K. BOUGHLA,ENET'Com,2025
+Business,Negotiation,55,Y. BENHASSINE,FSEGS,2022
+Mathematics,Logic,60,R. BOUAOUN,FSS,2025
+Computer Science,DevOps,45,F. BOUKHRIS,FSEGS,2022
+Engineering,Construction,50,T. BOUGHANMI,ENIS,2025
+Economics,Game Theory,55,M. BOUAZIZ,FSS,2022
+Computer Science,Computer Architecture,60,K. BENOTHMAN,ISIMS,2025

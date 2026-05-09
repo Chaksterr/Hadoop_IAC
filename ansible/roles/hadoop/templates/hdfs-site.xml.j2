@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!-- Replication -->
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    
+    <!-- NameNode and DataNode directories -->
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file://{{ hadoop_data_dir }}/namenode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file://{{ hadoop_data_dir }}/datanode</value>
+    </property>
+    
+    <!-- NameNode HTTP address -->
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>{{ namenode_host }}:9870</value>
+    </property>
+    
+    <!-- Bind to all network interfaces -->
+    <property>
+        <name>dfs.namenode.rpc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.namenode.http-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.namenode.https-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.datanode.ipc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+</configuration>
